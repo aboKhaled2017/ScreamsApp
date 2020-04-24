@@ -4,7 +4,8 @@ import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED,
 import { IUserState, ICredentials } from '../interfaces';
 import { Reducer } from 'react';
 import { AnyAction } from 'redux';
-import { UNLIKE_SCREAM } from '../types';
+import { UNLIKE_SCREAM, MARK_NOTIFICATIONS_READ } from '../types';
+import { markNotificationsRead } from '../Actions/userActions';
 const initialState:IUserState = {
  authenticated:false,
  credentials:{} as any as ICredentials,
@@ -33,7 +34,12 @@ const reducer:Reducer<IUserState,AnyAction&{payload?:any}>= (state = initialStat
         return {
             ...state,
             likes:state.likes.filter(like=>like.screamId!==payload.screamId)
-        }          
+        } 
+    case MARK_NOTIFICATIONS_READ:
+    {
+        state.notifications.forEach(notif=>(notif.read=true))
+        return{...state}
+    }             
     default:
         return state
     }

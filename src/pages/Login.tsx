@@ -52,6 +52,11 @@ const styles={
  }
 }
 class Login extends React.Component<ILoginProps, ILoginState> {
+  state={
+    email:'',
+    password:'',
+    errors:null as any
+  }
   static propTypes = {
     classes:PropTypes.object.isRequired,
     user:PropTypes.object.isRequired,
@@ -94,20 +99,20 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                     id="email" label="Email" 
                     value={this.state.email}
                     onChange={this.handleChange}
-                    helperText={errors.email}
-                    error={errors.email?true:false}
+                    helperText={errors?.email}
+                    error={errors?.email?true:false}
                     fullWidth
                     className={classes.textField}/>
           <TextField 
                     name="password" type="password" 
                     id="password" label="Password" 
-                    helperText={errors.password}
-                    error={errors.password?true:false}
+                    helperText={errors?.password}
+                    error={errors?.password?true:false}
                     value={this.state.password}
                     onChange={this.handleChange}
                     fullWidth
                     className={classes.textField}/>     
-          {errors.general && 
+          {errors?.general && 
            <Typography variant="body2" className={classes.customeErros}>{errors.general}</Typography>
           }          
           <Button 

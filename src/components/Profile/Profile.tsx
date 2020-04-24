@@ -1,11 +1,12 @@
 import React, { Component, createRef } from 'react'
 import {Link} from 'react-router-dom'
-import { IUserState } from '../Redux/interfaces';
+import { IUserState } from '../../Redux/interfaces';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import dayjs from 'dayjs'
 import EditDetails from './EditDetails'
-import MyButton from '../util/MyButton'
+import MyButton from '../../util/MyButton'
+import ProfileSkeleton from '../../util/ProfileSkeleton'
 /**Mui stuff */
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
@@ -20,7 +21,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import KeyboarReturnIcon from '@material-ui/icons/KeyboardReturn'
 /**redux stuff */
 import { connect } from 'react-redux'
-import { uploadUserImage, logoutUser } from '../Redux/Actions/userActions';
+import { uploadUserImage, logoutUser } from '../../Redux/Actions/userActions';
 
 interface Props {
     user:IUserState
@@ -154,7 +155,7 @@ export class Profile extends Component<Props, State> {
           </div>
         </Paper>
         ))
-        :(<p>loading ....</p>);
+        :(<ProfileSkeleton/>);
         return profileMarkUp;
     }
 }

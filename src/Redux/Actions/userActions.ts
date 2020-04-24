@@ -1,4 +1,4 @@
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER, LOADING_ERROR } from '../types';
+import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER, LOADING_ERROR, MARK_NOTIFICATIONS_READ } from '../types';
 import axios from 'axios'
 import { Dispatch, AnyAction } from 'redux'
 import { ILoginModel, ISignUpModel, IComponentHistory, IUSerDetails } from '../interfaces';
@@ -79,6 +79,16 @@ export const uploadUserImage=(formdata:FormData)=>(dispatch:Dispatch)=>{
     console.log(err)
   })
 }
+export const markNotificationsRead = (notificationIds:string[]) => (dispatch:Dispatch) => {
+  axios
+    .post('/notifications', notificationIds)
+    .then((res) => {
+      dispatch({
+        type: MARK_NOTIFICATIONS_READ
+      });
+    })
+    .catch((err) => console.log(err));
+};
 const AuthorizationHeader={
   tokenKey:'FBIdToken',
   setToken(token:string){

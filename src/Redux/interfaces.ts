@@ -19,14 +19,26 @@ export interface IScream{
     userHandle:string
     commentCount:number
     likeCount:number
+    comments:IComment[]
 }
 export interface IComment{
-
+    createdAt:string 
+    userHandle:string 
+    body:string 
+    userImage:string 
+    screamId:string
 }
 export interface IUSerDetails{
     bio:string|''
     website:string|''
     location:string|''
+}
+export interface IUSerCredentials{
+    email:string
+    userId:string
+    imgUrl:string 
+    createdAt:string 
+    handle:string    
 }
 export interface ICredentials extends IUSerDetails{
     email:string
@@ -49,6 +61,7 @@ export interface IValidationUiErros{
     general?:string
     confirmPassword?:string,
     handle?:string
+    body?:string
 }
 export interface IUIState{
     loading:boolean
@@ -73,3 +86,7 @@ export interface IDataState{
     scream:IScream 
     screams:IScream[]
 }
+export interface IUserData{
+    user:IUSerCredentials
+    screams:IScream[]
+} 

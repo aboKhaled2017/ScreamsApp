@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom';
-import { IUserState } from '../Redux/interfaces';
+import { IUserState } from '../../Redux/interfaces';
 import PropTypes from 'prop-types'
-import MyButton from '../util/MyButton';
+import MyButton from '../../util/MyButton';
+import  PostScreamButtonIcon from '../Scream/PostScream';
+import  Notifications from './Notifications';
 import { connect } from 'react-redux'
 /*Mui stuff*/
 import AppBar from '@material-ui/core/AppBar';
@@ -10,9 +12,8 @@ import ToolBar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 
 /**Icons stuff */
-import AddIcon from '@material-ui/icons/Add'
 import HomeIcon from '@material-ui/icons/Home'
-import NotificationsIcon from '@material-ui/icons/Notifications'
+
 
 interface Props {
     authenticated:boolean
@@ -33,17 +34,13 @@ class Navbar extends Component<Props, State> {
                 <ToolBar className="nav-container">
                     {this.props.authenticated?(//authenticated links
                       <>
-                        <MyButton tip="Post a scream">
-                        <AddIcon color="primary"/>
-                        </MyButton>
+                        <PostScreamButtonIcon/>
                         <Link to="/">
                         <MyButton tip="Home">
                             <HomeIcon color="primary"/>
                         </MyButton>
                         </Link>
-                        <MyButton tip="Notifications">
-                        <NotificationsIcon color="primary"/>
-                        </MyButton>
+                        <Notifications/>             
                       </>
                     ):(//not authenticated links
                       <>

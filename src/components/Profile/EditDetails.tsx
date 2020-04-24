@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import {Dispatch} from 'redux'
-import { editUserDetails } from '../Redux/Actions/userActions';
+import { editUserDetails } from '../../Redux/Actions/userActions';
 import PropTypes from 'prop-types';
-import { IUserState, ICredentials, IUSerDetails } from '../Redux/interfaces';
+import { IUserState, ICredentials, IUSerDetails } from '../../Redux/interfaces';
 /**Material ui stuff */
 import withStyles from '@material-ui/core/styles/withStyles'
-import { Theme } from '@material-ui/core/styles';
 import  Tooltip from '@material-ui/core/Tooltip';
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'

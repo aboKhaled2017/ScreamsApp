@@ -1,24 +1,24 @@
 import React from 'react'; 
-import { IScream, IUserState, IDataState } from '../Redux/interfaces';
+import { IScream, IUserState, IDataState } from '../../Redux/interfaces';
 import { connect } from 'react-redux'
 import { withStyles, Typography } from '@material-ui/core';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { Dispatch } from 'redux'
-import DeleteScream from '../components/DeleteScream'
-//MUI stuff
+import DeleteScream from '../Scream/DeleteScream'
+import ScreamDialoge from '../Scream/ScreamDialoge'
+import LikeButton from './LikeButton'
+//MUI stuffport 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { Link } from 'react-router-dom';
-import { likeScream, unLikeScream } from '../Redux/Actions/dataActions';
+import { likeScream, unLikeScream } from '../../Redux/Actions/dataActions';
 import PropTypes from 'prop-types';
-import MyButton from '../util/MyButton';
+import MyButton from '../../util/MyButton';
 
 //icons
 import ChatIcon from '@material-ui/icons/Chat'
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
-import FavoriteIcon from '@material-ui/icons/Favorite'
 const styles={
     card:{
         position:'relative',
@@ -40,6 +40,7 @@ export interface IScreamProps {
     user:IUserState
     likeScream:(screamId:string)=>(dispatch:Dispatch)=>void
     unLikeScream:(screamId:string)=>(dispatch:Dispatch)=>void    
+    openDialog:boolean
 }
 
 export interface IScreamState {}
@@ -52,17 +53,7 @@ class Scream extends React.Component<IScreamProps, IScreamState> {
       likeScream:PropTypes.func.isRequired,
       unLikeScream:PropTypes.func.isRequired,
       scream:PropTypes.object.isRequired,
-  }
-  likesThisScream=()=>{
-    return (this.props.user.likes &&
-           this.props.user.likes
-           .find(like=>like.screamId===this.props.scream.screamId))?true:false;
-  }
-  likeScream=()=>{
-      this.props.likeScream(this.props.scream.screamId)
-  }
-  unlikeScream=()=>{
-      this.props.unLikeScream(this.props.scream.screamId)
+      openDialog:PropTypes.bool
   }
   render() {
     dayjs.extend(relativeTime);
@@ -77,26 +68,10 @@ class Scream extends React.Component<IScreamProps, IScreamState> {
         userImage,
       }=this.props.scream;
     const {classes,user:{authenticated,credentials:{handle}}}=this.props;
-    const likeButton=!authenticated?(//user is authenticted
-       <MyButton tip="Like">
-           <Link to="/login">
-               <FavoriteBorderIcon color="primary"/>
-           </Link>
-       </MyButton>
-    ):(//user not authenticated
-    this.likesThisScream()?(//user liked this scream
-        <MyButton tip="Undo like"  onClick={this.unlikeScream}>
-           <FavoriteIcon color="primary"/>
-        </MyButton>
-    ):(//user not liked this
-        <MyButton tip="like" onClick={this.likeScream}>
-          <FavoriteBorderIcon color="primary"/>
-        </MyButton>
-    )
-    );
     const DeleteButton=authenticated && userHandle===handle?(
         <DeleteScream screamId={screamId}/>
     ):null;
+   
     return (
         <Card className={classes.card}>
             <CardMedia 
@@ -114,12 +89,13 @@ class Scream extends React.Component<IScreamProps, IScreamState> {
                 {DeleteButton}
                 <Typography variant="body2" color="textSecondary">{dayjs(createdAt).fromNow()}</Typography>
                 <Typography variant="body1">{body}</Typography>
-                {likeButton}
+                <LikeButton screamId={screamId} />
                 <span>{likeCount} Likes</span>
                 <MyButton tip="comments">
                   <ChatIcon color="primary"/>
                 </MyButton>
                 <span>{commentCount} comments</span>
+                <ScreamDialoge screamId={screamId} userHandle={userHandle} openDialog={this.props.openDialog}/>
              </CardContent>
         </Card>
     );

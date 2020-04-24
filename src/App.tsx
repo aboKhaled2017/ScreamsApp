@@ -9,24 +9,25 @@ import './App.css';
 /**Redux */
 import {Provider} from 'react-redux'
 import store from './Redux/store'
-import {getUserData} from './Redux/Actions/userActions'
+import {getUserData, logoutUser} from './Redux/Actions/userActions'
 /**components */
-import Navbar from './components/Navbar';
+import Navbar from './components/Layout/Navbar';
 import AuthRoute from './util/AuthRoute'
 /**pages */
 import Home from './pages/Home'
 import Login from './pages/Login'
 import SignUp from './pages/Signup'
-import { SET_UNAUTHENTICATED, SET_AUTHENTICATED } from './Redux/types';
+import User from './pages/User'
+
+import {  SET_AUTHENTICATED } from './Redux/types';
 import { AnyAction } from 'redux';
+axios.defaults.baseURL="https://europe-west1-socialapp-a7454.cloudfunctions.net/api";
 const FBIdToken=localStorage.getItem('FBIdToken');
 if(FBIdToken){
 const decodedToken=jwtDecode(FBIdToken) as any; 
 if(decodedToken.exp*1000 < Date.now()){
-  if(window.location.href.indexOf('/login')<0){
-    window.location.href="/login"
-  }
-  store.dispatch({type:SET_UNAUTHENTICATED});
+  store.dispatch(logoutUser() as any);
+  window.location.href="/login"
 }
 else{
   store.dispatch({type:SET_AUTHENTICATED});
@@ -34,7 +35,7 @@ else{
   store.dispatch(getUserData() as any as AnyAction)
 }
 }
-const theme=createMuiTheme(themeFile)
+const theme=createMuiTheme(themeFile as any)
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
@@ -46,6 +47,8 @@ function App() {
               <Route exact path="/" component={Home}/>
               <AuthRoute exact path="/login"  component={Login}/>
               <AuthRoute exact path="/signup" component={SignUp}/>
+              <Route exact  path="/users/:handle" component={User}/>
+              <Route exact  path="/users/:handle/scream/:screamId" component={User}/>
             </Switch>
           </div>
           </BrowserRouter>

@@ -17,3 +17,6 @@ html,body{
 a{
   text-decoration: none;
 }
+.MuiDialogContent-root{
+  overflow:hidden
+}
