@@ -4,7 +4,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abokhaled555/socialApp.git"
+    "url": "git+https://github.com/aboKhaled2017/SocialApp.git"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.11",

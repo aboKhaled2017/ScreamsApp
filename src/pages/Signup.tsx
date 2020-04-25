@@ -52,14 +52,11 @@ const styles={
  }
 }
 class SignUp extends React.Component<ISignUpProps, ISignUpState> {
-  constructor(props:any){
-       super(props);
-       this.state={
-         email:'',
-         password:'',
-         confirmPassword:'',
-         handle:'',
-       }
+  state={
+    email:'',
+    password:'',
+    confirmPassword:'',
+    handle:'',
   }
   static propTypes={
     classes:propTypes.object.isRequired,
@@ -97,15 +94,15 @@ class SignUp extends React.Component<ISignUpProps, ISignUpState> {
                     id="email" label="Email" 
                     value={this.state.email}
                     onChange={this.handleChange}
-                    helperText={errors.email}
-                    error={errors.email?true:false}
+                    helperText={errors?.email}
+                    error={errors?.email?true:false}
                     fullWidth
                     className={classes.textField}/>
           <TextField 
                     name="password" type="password" 
                     id="password" label="Password" 
-                    helperText={errors.password}
-                    error={errors.password?true:false}
+                    helperText={errors?.password}
+                    error={errors?.password?true:false}
                     value={this.state.password}
                     onChange={this.handleChange}
                     fullWidth
@@ -113,8 +110,8 @@ class SignUp extends React.Component<ISignUpProps, ISignUpState> {
            <TextField 
                     name="confirmPassword" type="password" 
                     id="confirmPassword" label="Confirm Password" 
-                    helperText={errors.confirmPassword}
-                    error={errors.confirmPassword?true:false}
+                    helperText={errors?.confirmPassword}
+                    error={errors?.confirmPassword?true:false}
                     value={this.state.confirmPassword}
                     onChange={this.handleChange}
                     fullWidth
@@ -122,14 +119,14 @@ class SignUp extends React.Component<ISignUpProps, ISignUpState> {
            <TextField 
                     name="handle" type="text" 
                     id="handle" label="Handle" 
-                    helperText={errors.handle}
-                    error={errors.handle?true:false}
+                    helperText={errors?.handle}
+                    error={errors?.handle?true:false}
                     value={this.state.handle}
                     onChange={this.handleChange}
                     fullWidth
                     className={classes.textField}/>                         
-          {errors.general && 
-           <Typography variant="body2" className={classes.customeErros}>{errors.general}</Typography>
+          {errors?.general && 
+           <Typography variant="body2" className={classes.customeErros}>{errors?.general}</Typography>
           }          
           <Button 
                   type="submit" variant="contained" 
